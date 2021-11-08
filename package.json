@@ -1,0 +1,33 @@
+{
+	"name": "oslash-clone",
+	"version": "1.0.0",
+	"description": "OSlash Clone",
+	"main": "dist/index.js",
+	"scripts": {
+		"build": "rimraf dist && tsc",
+		"serve": "cross-env NODE_ENV=development ts-node-dev --respawn --pretty --transpile-only src/index.ts",
+		"prestart": "npm run build",
+		"start": "cross-env NODE_ENV=production node ."
+	},
+	"keywords": [
+		"OSlash",
+		"oslash"
+	],
+	"author": "itizarsa",
+	"license": "MT",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"cross-env": "^7.0.3",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"helmet": "^4.6.0",
+		"rimraf": "^2.7.1"
+	},
+	"devDependencies": {
+		"@types/cors": "^2.8.12",
+		"@types/express": "^4.17.13",
+		"@types/node": "^16.11.6",
+		"ts-node-dev": "^1.1.8",
+		"typescript": "^4.4.4"
+	}
+}
