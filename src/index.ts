@@ -8,8 +8,11 @@ import cors from "cors"
 import helmet from "helmet"
 import { errorHandler } from "./middleware/error.middleware"
 import { notFoundHandler } from "./middleware/not-found.middleware"
+import connectDb from "./common/db"
 
 dotenv.config()
+
+connectDb()
 
 /**
  * App Variables
