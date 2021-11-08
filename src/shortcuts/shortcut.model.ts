@@ -7,12 +7,15 @@ export interface Shortcut extends Document {
 	tags: string
 }
 
-const ShortcutSchema = new Schema<Shortcut>({
-	shortlink: { type: String, required: true },
-	url: { type: String, required: true },
-	description: String,
-	tags: String
-})
+const ShortcutSchema = new Schema<Shortcut>(
+	{
+		shortlink: { type: String, required: true },
+		url: { type: String, required: true },
+		description: String,
+		tags: String
+	},
+	{ timestamps: true }
+)
 
 const ShortcutModel = model<Shortcut>("Shortcut", ShortcutSchema)
 
