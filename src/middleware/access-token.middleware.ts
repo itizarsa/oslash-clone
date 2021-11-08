@@ -27,7 +27,7 @@ export const checkAccessToken = async (req: Request, res: Response, next: NextFu
 
 	if (err) return res.status(401).json({ message: "Invalid Access Token" })
 
-	res.locals.user = payload.userId
+	res.locals.user = { userId: payload.userId, token }
 
 	next()
 }
