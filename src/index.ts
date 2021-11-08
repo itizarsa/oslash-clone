@@ -10,8 +10,9 @@ import "reflect-metadata"
 import cors from "cors"
 
 import { notFoundHandler } from "./middleware/not-found.middleware"
-import { errorHandler } from "./middleware/error.middleware"
 import { shortcutsRouter } from "./shortcuts/shortcuts.router"
+import { errorHandler } from "./middleware/error.middleware"
+import { authRouter } from "./auth/auth.router"
 import connectDb from "./common/db"
 
 dotenv.config()
@@ -40,6 +41,7 @@ app.use(helmet())
 app.use(cors())
 app.use(express.json())
 
+app.use("/api/auth", authRouter)
 app.use("/api/shortcuts", shortcutsRouter)
 
 app.use(errorHandler)
