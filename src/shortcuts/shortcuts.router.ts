@@ -53,3 +53,14 @@ shortcutsRouter.post(
 		res.status(200).send(response)
 	})
 )
+
+// DELETE shortcuts/:id
+
+shortcutsRouter.delete(
+	"/:id",
+	expressAsyncHandler(async (req: Request, res: Response) => {
+		const response = await ShortcutsService.remove(req.params.id)
+
+		res.status(204).send(response)
+	})
+)
