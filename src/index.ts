@@ -6,6 +6,7 @@ import * as dotenv from "dotenv"
 import express from "express"
 import helmet from "helmet"
 import chalk from "chalk"
+import "reflect-metadata"
 import cors from "cors"
 
 import { notFoundHandler } from "./middleware/not-found.middleware"
