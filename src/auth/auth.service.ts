@@ -6,10 +6,10 @@ import * as jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import HttpException from "../common/http-exception"
 import * as UserService from "../users/users.service"
+import TokenModel, { Token } from "./token.model"
 import { asyncWrapper } from "../common/util"
 import { Login } from "./auth.interface"
 import { LoginDto } from "./login.dto"
-import TokenModel from "./token.model"
 
 /**
  * Service Methods
@@ -47,4 +47,18 @@ export const login = async (body: LoginDto): Promise<Login> => {
 	}
 
 	return { accessToken, expiresIn: 3600 }
+}
+
+export const logout = async (token: Token) => {
+	const deleteTokenReq = TokenModel.deleteOne({ userId: token.userId, token: token.token }).exec()
+
+	const [deleteTokenErr] = await asyncWrapper(deleteTokenReq)
+
+	if (deleteTokenErr) {
+		const { message } = deleteTokenErr
+
+		throw new HttpException(500, message, deleteTokenErr)
+	}
+
+	return { message: "Logout Successful" }
 }
