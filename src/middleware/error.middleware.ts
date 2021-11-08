@@ -7,7 +7,7 @@ export const errorHandler = (
 	response: Response,
 	next: NextFunction
 ) => {
-	const status = error.statusCode || 500
+	const { statusCode: status = 500, message = "Something went wrong" } = error
 
-	response.status(status).send(error)
+	response.status(status).json({ message })
 }
