@@ -1,7 +1,7 @@
 import { IsDefined, IsString, IsUrl } from "class-validator"
 import { Expose } from "class-transformer"
 
-export class ShortcutDto {
+export class CreateShortcutDto {
 	@IsDefined()
 	@IsString()
 	@Expose()
