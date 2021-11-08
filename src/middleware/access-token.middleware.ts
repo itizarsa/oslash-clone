@@ -1,6 +1,7 @@
 import { Response, Request, NextFunction } from "express"
 import * as jwt from "jsonwebtoken"
 import { asyncWrapper } from "../common/util"
+import TokenModel from "../auth/token.model"
 
 const verifyJwt = (token: string) => {
 	return new Promise((resolve, reject) => {
@@ -23,9 +24,19 @@ export const checkAccessToken = async (req: Request, res: Response, next: NextFu
 
 	const token = authHeader.split(" ")[1]
 
-	const [err, payload] = await asyncWrapper(verifyJwt(token))
+	const [findTokenErr, findTokenRes] = await asyncWrapper(TokenModel.findOne({ token }).exec())
 
-	if (err) return res.status(401).json({ message: "Invalid Access Token" })
+	if (findTokenErr) {
+		const { message } = findTokenErr
+
+		return res.status(500).json({ message })
+	}
+
+	if (!findTokenRes) return res.status(401).json({ message: "Invalid Access Token" })
+
+	const [verifyJwtErr, payload] = await asyncWrapper(verifyJwt(token))
+
+	if (verifyJwtErr) return res.status(401).json({ message: "Invalid Access Token" })
 
 	res.locals.user = { userId: payload.userId, token }
 
