@@ -1,4 +1,4 @@
-export interface UserQuery {
+export interface FindUserQuery {
 	id?: string
 	email?: string
 }
