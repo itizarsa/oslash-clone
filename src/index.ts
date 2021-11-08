@@ -8,8 +8,9 @@ import helmet from "helmet"
 import chalk from "chalk"
 import cors from "cors"
 
-import { errorHandler } from "./middleware/error.middleware"
 import { notFoundHandler } from "./middleware/not-found.middleware"
+import { errorHandler } from "./middleware/error.middleware"
+import { shortcutsRouter } from "./shortcuts/shortcuts.router"
 import connectDb from "./common/db"
 
 dotenv.config()
@@ -37,6 +38,8 @@ const { green, bold, cyan } = chalk
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+
+app.use("/api/shortcuts", shortcutsRouter)
 
 app.use(errorHandler)
 app.use(notFoundHandler)
