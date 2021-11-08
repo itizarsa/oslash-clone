@@ -8,7 +8,7 @@ import helmet from "helmet"
 import chalk from "chalk"
 import "reflect-metadata"
 import cors from "cors"
-
+import { checkAccessToken } from "./middleware/access-token.middleware"
 import { notFoundHandler } from "./middleware/not-found.middleware"
 import { shortcutsRouter } from "./shortcuts/shortcuts.router"
 import { errorHandler } from "./middleware/error.middleware"
@@ -40,6 +40,7 @@ const { green, bold, cyan } = chalk
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+app.use(checkAccessToken)
 
 app.use("/api/auth", authRouter)
 app.use("/api/shortcuts", shortcutsRouter)
