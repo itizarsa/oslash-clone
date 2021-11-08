@@ -29,3 +29,14 @@ authRouter.post(
 		res.status(200).send(response)
 	})
 )
+
+// GET auth/logout
+
+authRouter.get(
+	"/logout",
+	expressAsyncHandler(async (req: Request, res: Response) => {
+		const response = await AuthService.logout(res.locals.user)
+
+		res.status(200).send(response)
+	})
+)
