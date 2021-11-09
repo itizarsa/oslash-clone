@@ -5,6 +5,7 @@
 import * as dotenv from "dotenv"
 import express from "express"
 import helmet from "helmet"
+import logger from "morgan"
 import chalk from "chalk"
 import "reflect-metadata"
 import cors from "cors"
@@ -38,6 +39,7 @@ const { green, bold, cyan } = chalk
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+app.use(logger("dev"))
 app.use(checkAccessToken)
 
 app.use("/api/auth", authRouter)
