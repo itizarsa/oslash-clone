@@ -5,12 +5,14 @@ export interface Shortcut extends Document {
 	url: string
 	description: string
 	tags: string
+	userId: string
 }
 
 const ShortcutSchema = new Schema<Shortcut>(
 	{
 		shortlink: { type: String, required: true },
 		url: { type: String, required: true },
+		userId: { type: String, required: true },
 		description: String,
 		tags: String
 	},
