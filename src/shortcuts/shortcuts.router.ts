@@ -24,7 +24,9 @@ export const shortcutsRouter = express.Router()
 shortcutsRouter.get(
 	"/",
 	expressAsyncHandler(async (req: Request, res: Response) => {
-		const response = await ShortcutsService.findAll()
+		const { userId } = res.locals.user
+
+		const response = await ShortcutsService.findAll(userId)
 
 		res.status(200).send(response)
 	})
@@ -36,7 +38,9 @@ shortcutsRouter.post(
 	"/search",
 	validationHandler(SearchShortcutDto),
 	expressAsyncHandler(async (req: Request, res: Response) => {
-		const response = await ShortcutsService.search(req.body)
+		const { userId } = res.locals.user
+
+		const response = await ShortcutsService.search(req.body, userId)
 
 		res.status(200).send(response)
 	})
@@ -48,7 +52,9 @@ shortcutsRouter.post(
 	"/",
 	validationHandler(CreateShortcutDto),
 	expressAsyncHandler(async (req: Request, res: Response) => {
-		const response = await ShortcutsService.create(req.body)
+		const { userId } = res.locals.user
+
+		const response = await ShortcutsService.create(req.body, userId)
 
 		res.status(200).send(response)
 	})
@@ -59,7 +65,9 @@ shortcutsRouter.post(
 shortcutsRouter.delete(
 	"/:id",
 	expressAsyncHandler(async (req: Request, res: Response) => {
-		const response = await ShortcutsService.remove(req.params.id)
+		const { userId } = res.locals.user
+
+		const response = await ShortcutsService.remove(req.params.id, userId)
 
 		res.status(204).send(response)
 	})
