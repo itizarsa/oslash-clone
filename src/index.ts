@@ -13,6 +13,7 @@ import { checkAccessToken } from "./middleware/access-token.middleware"
 import { notFoundHandler } from "./middleware/not-found.middleware"
 import { shortcutsRouter } from "./shortcuts/shortcuts.router"
 import { errorHandler } from "./middleware/error.middleware"
+import { userRouter } from "./users/users.router"
 import { authRouter } from "./auth/auth.router"
 import connectDb from "./common/db"
 
@@ -43,6 +44,7 @@ app.use(logger("dev"))
 app.use(checkAccessToken)
 
 app.use("/api/auth", authRouter)
+app.use("/api/users", userRouter)
 app.use("/api/shortcuts", shortcutsRouter)
 
 app.use(errorHandler)
