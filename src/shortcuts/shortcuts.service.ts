@@ -11,11 +11,11 @@ import { asyncWrapper } from "../common/util"
  * Service Methods
  */
 
-export const findAll = (): Promise<Shortcut[]> => {
-	return ShortcutModel.find({}).exec()
+export const findAll = (userId: string): Promise<Shortcut[]> => {
+	return ShortcutModel.find({ userId }).exec()
 }
 
-export const search = (body: SearchShortcutDto) => {
+export const search = (body: SearchShortcutDto, userId: string) => {
 	const { shortlink = "", description = "", tags = "" } = body
 
 	const query = {
@@ -23,18 +23,21 @@ export const search = (body: SearchShortcutDto) => {
 			{ shortlink: { $regex: shortlink, $options: "i" } },
 			{ description: { $regex: description, $options: "i" } },
 			{ tags: { $regex: tags, $options: "i" } }
-		]
+		],
+		userId
 	}
 
 	return ShortcutModel.find(query).exec()
 }
 
-export const create = (shortcut: Shortcut): Promise<Shortcut> => {
-	return new ShortcutModel(shortcut).save()
+export const create = (shortcut: Shortcut, userId: string): Promise<Shortcut> => {
+	return new ShortcutModel({ ...shortcut, userId }).save()
 }
 
-export const remove = async (id: string): Promise<string> => {
-	const [err, res] = await asyncWrapper(ShortcutModel.findByIdAndDelete(id).exec())
+export const remove = async (id: string, userId: string): Promise<string> => {
+	const [err, res] = await asyncWrapper(
+		ShortcutModel.findOneAndDelete({ _id: id, userId }).exec()
+	)
 
 	if (err) {
 		const { message } = err
